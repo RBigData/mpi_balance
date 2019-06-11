@@ -10,7 +10,7 @@ a directory named `mpi_balance`. Typically, this is submitted at the
 shell prompt on a cluster login node by
 
 ```{sh}
-$ qsub mpi_balance.pbs 
+$ qsub hello_balance.pbs 
 ```
 Note that other multithreaded R packages using multiple cores are
 managed similarly but each may have its own parameters that specify
