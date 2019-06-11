@@ -6,7 +6,7 @@
 #PBS -W group_list=YOUR-GROUP
 
 ## go to directory containing hello_balance.R file
-cd ~/rtest
+cd ~/mpi_balance
 pwd
 
 ## set variable for cores per R instance
