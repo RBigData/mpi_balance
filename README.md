@@ -7,7 +7,7 @@ with `mclapply()` (from the parallel package).
 Modify the all-caps parameters in the `hello_balance.pbs` script to
 match your local requirements. The script expects both files to be in
 a directory named `mpi_balance`. Typically, this is submitted at the
-shell prompt on a login node by
+shell prompt on a cluster login node by
 
 ```{sh}
 $ qsub mpi_balance.pbs 
@@ -17,7 +17,7 @@ managed similarly but each may have its own parameters that specify
 the number of cores used. Some may require setting environment
 variables. Care must be taken to prevent oversubscribing available
 cores and slowing things down. In particular, multithreaded BLAS (such
-as OpenBLAS) my by default use all available cores on a node,
+as OpenBLAS) may by default use all available cores on a node,
 conflicting with other on-node MPI instances or processes forked by
 mclapply.
 
