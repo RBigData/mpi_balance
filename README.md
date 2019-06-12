@@ -22,3 +22,9 @@ conflicting with other on-node MPI instances or processes forked by
 mclapply.
 
 See also wrathematics/openblasctl on GitHub for OpenBLAS thread control from R.
+
+While this script illustrates how to manage availability of cores to
+MPI ranks, the actual placement of threads is done by the OS. The OS
+does a pretty good job in our experience, although there can be a
+difference between theory and reality as is illustrated in
+this [Multithreaded Programming post on reddit](https://www.reddit.com/r/aww/comments/2oagj8/multithreaded_programming_theory_and_practice/).
