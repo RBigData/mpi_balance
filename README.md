@@ -9,10 +9,11 @@ multinode and multicore concepts play out on a cluster. I hope that
 understanding these concepts can lead to more efficient use of
 parallel resources.
 
-Modify the `-A`, `-q`, and `-W` parameters in the `hello_balance.pbs`
-script to match your local requirements. The script expects both files
-to be in a directory named `~/mpi_balance`. Typically, this is submitted
-at the shell prompt on a cluster login node by
+Modify the `-A`, `-q`, and `-W` parameter values and possibly the
+`module`s that are loaded in the `hello_balance.pbs` script to match
+your local requirements. The script expects both files to be in a
+directory named `~/mpi_balance`. Typically, this is submitted at the
+shell prompt on a cluster login node by
 
 ```{sh}
 $ qsub hello_balance.pbs 
