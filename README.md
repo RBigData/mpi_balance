@@ -15,13 +15,14 @@ $ qsub hello_balance.pbs
 Note that other multithreaded R packages using multiple cores are
 managed similarly but each may have its own parameters that specify
 the number of cores used. Some may require setting environment
-variables. Care must be taken to prevent oversubscribing available
+variables. 
+
+Care must be taken to prevent oversubscribing available
 cores and slowing things down. In particular, multithreaded BLAS (such
 as OpenBLAS) may by default use all available cores on a node,
 conflicting with other on-node MPI instances or processes forked by
-mclapply.
-
-See also wrathematics/openblasctl on GitHub for OpenBLAS thread control from R.
+mclapply. See also wrathematics/openblasctl on GitHub for OpenBLAS
+thread control from R.
 
 While this script illustrates how to manage availability of cores to
 MPI ranks, the actual placement of threads is done by the OS. The OS
