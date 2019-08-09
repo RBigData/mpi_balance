@@ -15,7 +15,7 @@ cores_total = allreduce(cores_on_my_node)
 cores_per_R = floor(cores_on_my_node/ranks_per_node)
 
 ## Run lapply on allocated cores to demonstrate fork pids
-my_pids = mclapply(1:cores, mc.function, mc.cores = cores_per_R)
+my_pids = mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 my_pids = do.call(paste, my_pids) # combines results from mclapply
 
 ## Same cores available for OpenBLAS (see openblasctl package)

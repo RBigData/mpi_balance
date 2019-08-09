@@ -1,13 +1,13 @@
 #!/bin/bash
-#PBS -N Rdemo_rank_core
+#PBS -N balance
 #PBS -A ccsd
 #PBS -l qos=std,nodes=4:ppn=32,walltime=00:02:00
 #PBS -q batch
 #PBS -W group_list=cades-ccsd
-#PBS -e rdemo.e
-#PBS -o rdemo.o
+#PBS -e balance.e
+#PBS -o balance.o
 
-cd ~/rtest
+cd ~/mpi_balance
 pwd
 
 ## modules can vary on platforms
@@ -21,7 +21,7 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # An illustration of fine control of R scripts and cores on several nodes
 # This runs 4 R sessions on each of 4 nodes (for a total of 16)
 # The hello_world.R script is set to use $cores_per_r cores in mclapply
-mpirun -np 16 --map-by ppr:4:node Rscript hello_world.R
+mpirun -np 16 --map-by ppr:4:node Rscript hello_balance.R
 
 ##
 ## Write similar scripts for SLURM, LSF, and SGE!!
