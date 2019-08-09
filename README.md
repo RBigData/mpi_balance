@@ -4,6 +4,11 @@ instances per node and available cores per R instance. The example
 combines [pbdMPI](https://github.com/RBigData/pbdMPI) (from pbdr.org)
 with `mclapply()` (from the parallel package).
 
+The example is intended to provide practice and insight on how R
+multinode and multicore concepts play out on a cluster. I hope that
+understanding these concepts can lead to more efficient use of
+parallel resources.
+
 Modify the `-A`, `-q`, and `-W` parameters in the `hello_balance.pbs`
 script to match your local requirements. The script expects both files
 to be in a directory named `~/mpi_balance`. Typically, this is submitted
@@ -12,6 +17,13 @@ at the shell prompt on a cluster login node by
 ```{sh}
 $ qsub hello_balance.pbs 
 ```
+
+A correct execution produces two output files `balance.e` and
+`balance.o`. The `balance.e` is the error output and a correct
+execution only gives the loaded modules list. The `balance.o` gives
+"Hello" messages from all ranks, specifying node names and process ids
+used by `mclapply()` within each rank.
+
 Note that other multithreaded R packages using multiple cores are
 managed similarly but each may have its own parameters that specify
 the number of cores used. Some may require setting environment
