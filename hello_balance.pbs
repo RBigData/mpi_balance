@@ -1,28 +1,27 @@
 #!/bin/bash
-#PBS -N YOUR-JOBNAME
-#PBS -A YOUR-ACCOUNT
-#PBS -l nodes=2:ppn=32,walltime=00:10:00
+#PBS -N Rdemo_rank_core
+#PBS -A ccsd
+#PBS -l qos=std,nodes=4:ppn=32,walltime=00:02:00
 #PBS -q batch
-#PBS -W group_list=YOUR-GROUP
+#PBS -W group_list=cades-ccsd
+#PBS -e rdemo.e
+#PBS -o rdemo.o
 
-## go to directory containing hello_balance.R file
-cd ~/mpi_balance
+cd ~/rtest
 pwd
 
-## set variable for cores per R instance
-cores_per_r=8
-
-## module names can vary on different platforms
+## modules can vary on platforms
 module load R
 echo "loaded R"
 module list
 
-## prevent warning when fork is combined with MPI
+## prevent warning when fork is used with MPI
 export OMPI_MCA_mpi_warn_on_fork=0
 
-## The #PBS -l above allocates 2 nodes with 32 cores each for up to 10 minutes.
+# An illustration of fine control of R scripts and cores on several nodes
+# This runs 4 R sessions on each of 4 nodes (for a total of 16)
+# The hello_world.R script is set to use $cores_per_r cores in mclapply
+mpirun -np 16 --map-by ppr:4:node Rscript hello_world.R
+
 ##
-## This example runs 4 R instances per node on 2 nodes for a total of
-## 8 R instances and tells the Rscript that $cores_per_r are available
-## for each R instance.
-mpirun -np 8 --map-by ppr:4:node Rscript hello_balance.R $cores_per_r
+## Write similar scripts for SLURM, LSF, and SGE!!
