@@ -11,7 +11,10 @@ parallel resources.
 
 Modify the `-A`, `-q`, and `-W` parameter values and possibly the
 `module`s that are loaded in the `hello_balance.pbs` script to match
-your local requirements. The script expects both files to be in a
+your local requirements. We would love to hear from you if you get
+this example to run with a different job scheduler.
+
+The script expects both files to be in a
 directory named `~/mpi_balance`. Typically, this is submitted at the
 shell prompt on a cluster login node by
 
