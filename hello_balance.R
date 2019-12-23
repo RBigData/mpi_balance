@@ -26,7 +26,7 @@ my_pids = do.call(paste, my_pids) # combines results from mclapply
 
 ## Now report what happened and where
 msg = paste0("Hello World from rank ", comm.rank(), " on host ", host, "\n",
-             "      with ", cores_per_R, " cores allocated (", ranks_per_node,
+             "      with ", cores_per_R, " cores allocated (", ranks_on_my_node,
              " R sessions sharing ", cores_on_my_node, " cores).\n",
              "      pid: ", my_pids, "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
