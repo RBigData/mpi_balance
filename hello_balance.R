@@ -7,11 +7,11 @@ mc.function = function(x) {
     ## Put code for mclapply cores here
     Sys.getpid() # returns process id
 }
-system("export")
+
 ## Compute how many cores per R session are on this node
-ranks_per_node = as.numeric(system("echo $PBS_NUM_NODES", intern = TRUE))
+ranks_per_node = as.numeric(system("echo $OMPI_COMM_WORLD_LOCAL_SIZE",
+                                   intern = TRUE))
 cores_on_my_node = detectCores()
-cores_total = allreduce(cores_on_my_node)
 cores_per_R = floor(cores_on_my_node/ranks_per_node)
 
 ## Run lapply on allocated cores to demonstrate fork pids
