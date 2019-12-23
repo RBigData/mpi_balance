@@ -7,7 +7,7 @@ mc.function = function(x) {
     ## Put code for mclapply cores here
     Sys.getpid() # returns process id
 }
-
+system("export")
 ## Compute how many cores per R session are on this node
 ranks_per_node = as.numeric(system("echo $PBS_NUM_NODES", intern = TRUE))
 cores_on_my_node = detectCores()
