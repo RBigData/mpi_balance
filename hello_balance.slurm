@@ -23,7 +23,7 @@ echo "loaded R"
 module list
 
 ## prevent warning when fork is used with MPI
-## export OMPI_MCA_mpi_warn_on_fork=0
+export OMPI_MCA_mpi_warn_on_fork=0
 
 # Note that 4 nodes with 32 cores are allocated by PBS above. Their actual
 # use is determined by the mpirun command below. Some local cluster policies
