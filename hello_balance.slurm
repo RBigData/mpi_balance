@@ -38,7 +38,7 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # available per R session from PBS environment variables and use that many
 # in mclapply.
 #
-mpirun -np 16 --map-by ppr:4:node Rscript hello_balance.R
+mpirun -np 16 --map-by ppr:4:node --mca btl tcp,self Rscript hello_balance.R
 
 ##
 ## Write similar scripts for SLURM, LSF, and SGE!!
