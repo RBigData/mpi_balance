@@ -3,9 +3,9 @@
 #SBATCH -p batch
 #SBATCH -N 4
 #SBATCH -n 4
-#SBATCH -c 8
+#SBATCH -c 9
 #SBATCH --ntasks-per-node=4
-#SBATCH --mem=2G
+#SBATCH --mem=1G
 #SBATCH -t 00:02:00
 #SBATCH -e balance.e
 #SBATCH -o balance.o
