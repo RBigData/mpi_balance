@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH -J hello_balance
 #SBATCH -A ccsd
 #SBATCH -p batch
 #SBATCH -N 4
@@ -7,8 +8,8 @@
 #SBATCH --ntasks-per-node=4
 #SBATCH --mem=1G
 #SBATCH -t 00:02:00
-#SBATCH -e balance.e
-#SBATCH -o balance.o
+#SBATCH -e ./balance.e
+#SBATCH -o ./balance.o
 #SBATCH --mail-user=ost@ornl.gov
 #SBATCH --mail-type=FAIL
 
@@ -17,6 +18,7 @@ cd ~/mpi_balance
 pwd
 
 ## module names can vary on different platforms
+module purge
 module load PE-gnu/3.0
 module load R/3.6.0
 echo "loaded R"
