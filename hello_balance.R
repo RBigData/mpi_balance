@@ -14,7 +14,7 @@ ranks_on_my_node = as.numeric(system("echo $OMPI_COMM_WORLD_LOCAL_SIZE",
 
 cores_on_my_node = detectCores()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
-cores_total = allreduce(cores_per_R)
+cores_total = allreduce(cores_per_R)  # adds up over ranks
 
 ## Run lapply on allocated cores to demonstrate fork pids
 my_pids = mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
