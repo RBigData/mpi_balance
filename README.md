@@ -1,23 +1,27 @@
-# mpi_balance
-A batch MPI example for a PBS scheduler of balancing the number of R
-instances per node and available cores per R instance. The example
-combines [pbdMPI](https://github.com/RBigData/pbdMPI) (from pbdr.org)
-with `mclapply()` (from the parallel package).
+# mpi_balance A batch MPI example for slurm or PBS scheduler to
+illustrate balancing the number of R instances per node and available
+cores per R instance. The example combines
+[pbdMPI](https://github.com/RBigData/pbdMPI) (from pbdr.org) with
+`mclapply()` (from the parallel package).
 
-The example is intended to provide practice and insight on how R
+The example is intended to provide practice and insight into how R
 multinode and multicore concepts play out on a cluster. I hope that
 understanding these concepts can lead to more efficient use of
 parallel resources.
 
-Modify the `-A`, `-q`, and `-W` parameter values and possibly the
-`module`s that are loaded in the `hello_balance.pbs` script to match
-your local requirements. We would love to hear from you if you get
-this example to run with a different job scheduler.
+You may need to modify the SLURM or PBS parameter values and possibly
+the `module`s that are loaded in the `hello_balance.pbs` and
+`hello_balance.slurm` scripts to match your local requirements. We
+would love to hear from you if you get this example to run with a
+different job scheduler.
 
 The script expects both files to be in a
 directory named `~/mpi_balance`. Typically, this is submitted at the
-shell prompt on a cluster login node by
-
+shell prompt on a cluster login node using slurm by
+```{sh}
+$ sbatch hello_balance.slurm
+```
+or on one using PBS by
 ```{sh}
 $ qsub hello_balance.pbs 
 ```
