@@ -16,4 +16,4 @@ module list
 ## prevent warning when fork is used with MPI
 export OMPI_MCA_mpi_warn_on_fork=0
 
-mpirun -np 1  Rscript hello_balance.R
+mpirun -np 1 --mca mpi_warn_on_fork 0 Rscript hello_balance.R 
