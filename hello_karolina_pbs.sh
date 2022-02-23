@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N balance
-#PBS -l select=1:ncpus=128,walltime=00:00:10
+#PBS -l select=2:ncpus=128,walltime=00:00:10
 #PBS -q qexp
 #PBS -e balance.e
 #PBS -o balance.o
@@ -16,4 +16,4 @@ module list
 ## prevent warning when fork is used with MPI
 export OMPI_MCA_mpi_warn_on_fork=0
 
-mpirun -np 1 --mca mpi_warn_on_fork 0 Rscript hello_balance.R 
+time mpirun -np 2 Rscript hello_balance.R 
