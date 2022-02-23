@@ -19,11 +19,11 @@ cores_total = allreduce(cores_per_R)  # adds up over ranks
 ## Run lapply on allocated cores to demonstrate fork pids
 my_pids = mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 my_pids = do.call(paste, my_pids) # combines results from mclapply
-
-## Same cores available for OpenBLAS (see openblasctl package)
+##
+## Same cores are shared with OpenBLAS (see flexiblas package)
 ##            or for other OpenMP enabled codes outside mclapply.
 ## If BLAS functions are called inside mclapply, they compete for the
-##            same cores: avoid or manage appropriately.
+##            same cores: avoid or manage appropriately!!!
 
 ## Now report what happened and where
 msg = paste0("Hello World from rank ", comm.rank(), " on host ", host,

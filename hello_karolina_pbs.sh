@@ -14,6 +14,6 @@ echo "loaded R"
 module list
 
 ## prevent warning when fork is used with MPI
-export OMPI_MCA_mpi_warn_on_fork=0
+export OMPI_MCA_orte_warn_on_fork=0
 
 time mpirun -np 8 --map-by ppr:4:node Rscript hello_balance.R
