@@ -1,9 +1,8 @@
 #!/bin/bash
 #PBS -N balance
-#PBS -A ccsd
-#PBS -l qos=std,nodes=4:ppn=32,walltime=00:02:00
-#PBS -q batch
-#PBS -W group_list=cades-ccsd
+#PBS -A DD-21-42
+#PBS -l select=2:ncpus=64,walltime=00:00:10
+#PBS -q qprod
 #PBS -e balance.e
 #PBS -o balance.o
 
