@@ -11,9 +11,6 @@ mc.function = function(x) {
 ## Compute how many cores per R session are on this node
 ranks_on_my_node = as.numeric(system("echo $OMPI_COMM_WORLD_LOCAL_SIZE",
                                    intern = TRUE))
-x = matrix(rnorm(1e7), nrow = 1e4)
-y = crossprod(x)
-z = allreduce(y)
 
 cores_on_my_node = detectCores()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
