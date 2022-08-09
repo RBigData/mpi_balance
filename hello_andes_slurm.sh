@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH -J hello_balance
-#SBATCH -A GEN011
+#SBATCH -A CSC489
 #SBATCH -p batch
 #SBATCH --nodes=4
 #SBATCH --mem=2G
