@@ -1,23 +1,21 @@
 suppressMessages(library(pbdMPI))
-suppressMessages(library(parallel))
 
 host = system("hostname", intern = TRUE)
 
 mc.function = function(x) {
-    ## Put code for mclapply cores here
+    Sys.sleep(1) # replace with your function for mclapply cores here
     Sys.getpid() # returns process id
 }
 
 ## Compute how many cores per R session are on this node
-ranks_on_my_node = as.numeric(system("echo $OMPI_COMM_WORLD_LOCAL_SIZE",
-                                   intern = TRUE))
-
-cores_on_my_node = detectCores()
+local_ranks_query = "echo $OMPI_COMM_WORLD_LOCAL_SIZE"
+ranks_on_my_node = as.numeric(system(local_ranks_query, intern = TRUE))
+cores_on_my_node = parallel::detectCores()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
 
 ## Run lapply on allocated cores to demonstrate fork pids
-my_pids = mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
+my_pids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 my_pids = do.call(paste, my_pids) # combines results from mclapply
 ##
 ## Same cores are shared with OpenBLAS (see flexiblas package)
