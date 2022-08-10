@@ -8,6 +8,7 @@
 #SBATCH -e ./balance.e
 #SBATCH -o ./balance.o
 
+## assumes this repository was cloned in your home area
 cd ~/mpi_balance
 pwd
 
@@ -18,6 +19,8 @@ flexiblas add OpenBLAS $OLCF_OPENBLAS_ROOT/lib/libopenblas.so
 export LD_PRELOAD=$OLCF_FLEXIBLAS_ROOT/lib64/libflexiblas.so
 module load r
 echo -e "loaded R with FlexiBLAS"
+## above supplies your R code with FlexiBLAS-OpenBLAS on Andes
+## but matrix computation is not used in the R illustration below
 
 ## prevent warning when fork is used with MPI
 export OMPI_MCA_mpi_warn_on_fork=0
@@ -26,10 +29,10 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # This runs 4 R sessions on each of 4 nodes (for a total of 16).
 #
 # Each of the 16 hello_world.R scripts will calculate how many cores are
-# available per R session from PBS environment variables and use that many
+# available per R session from environment variables and use that many
 # in mclapply.
 # 
 # NOTE: center policies may require dfferent parameters
 #
-# nodes and mapping picked up from slurm by openmpi
+# runs 4 R sessions per node
 mpirun --map-by ppr:4:node Rscript hello_balance.R
