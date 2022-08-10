@@ -3,10 +3,12 @@
 #SBATCH -A CSC489
 #SBATCH -p batch
 #SBATCH --nodes=4
-#SBATCH --mem=2G
+#SBATCH --mem=0
 #SBATCH -t 00:00:10
 #SBATCH -e ./balance.e
 #SBATCH -o ./balance.o
+
+## above we request 4 nodes and all memory on the nodes
 
 ## assumes this repository was cloned in your home area
 cd ~/mpi_balance
