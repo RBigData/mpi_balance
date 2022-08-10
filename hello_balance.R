@@ -1,5 +1,6 @@
 suppressMessages(library(pbdMPI))
 
+## get node name
 host = system("hostname", intern = TRUE)
 
 mc.function = function(x) {
@@ -14,7 +15,7 @@ cores_on_my_node = parallel::detectCores()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
 
-## Run lapply on allocated cores to demonstrate fork pids
+## Run mclapply on allocated cores to demonstrate fork pids
 my_pids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 my_pids = do.call(paste, my_pids) # combines results from mclapply
 ##
