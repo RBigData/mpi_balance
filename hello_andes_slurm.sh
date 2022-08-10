@@ -7,6 +7,7 @@
 #SBATCH -t 00:00:10
 #SBATCH -e ./balance.e
 #SBATCH -o ./balance.o
+#SBATCH --open-mode=truncate
 
 ## above we request 4 nodes and all memory on the nodes
 
