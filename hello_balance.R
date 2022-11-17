@@ -16,7 +16,9 @@ cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
 
 ## Run mclapply on allocated cores to demonstrate fork pids
+mc_time = system.time({
 my_pids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
+})
 my_pids = do.call(paste, my_pids) # combines results from mclapply
 ##
 ## Same cores are shared with OpenBLAS (see flexiblas package)
@@ -39,6 +41,8 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
+comm.cat("\n User  System  Elapsed  Child_User  Child_System\n")
+comm.cat(mc_time, "\n")
 
 finalize()
 
