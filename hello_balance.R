@@ -50,16 +50,9 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
 
-barrier()
-comm.cat("\nmclapply time on each of the", size, "ranks:\n")
-comm.cat("Rank     User      System    Elapsed   Child_User Child_System\n",
-         quiet = TRUE)
-comm.cat(rank, sprintf("%10.3f", mc_time), "\n", quiet = TRUE)
-
-comm.cat("\nlapply time on each of the", size, "ranks:\n")
-comm.cat("Rank     User      System    Elapsed   Child_User Child_System\n",
-         quiet = TRUE)
-comm.cat(rank, sprintf("%10.3f", l_time), "\n", quiet = TRUE)
+comm.cat("Correct scaling should have time lapply ~", cores_per_r, "* mclapply\n")
+comm.cat("mclapply time on each of the", size, "ranks:", mc_time[3], "\n")
+comm.cat("lapply time on each of the", size, "ranks:", l_time[3], "\n")
 
 finalize()
 
