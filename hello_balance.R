@@ -50,7 +50,7 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
 
-comm.cat("Correct scaling should have time lapply ~", cores_per_r, "* mclapply\n")
+comm.cat("For correct scaling, time lapply ~", cores_per_R, "* mclapply\n")
 comm.cat("mclapply time on each of the", size, "ranks:", mc_time[3], "\n")
 comm.cat("lapply time on each of the", size, "ranks:", l_time[3], "\n")
 
