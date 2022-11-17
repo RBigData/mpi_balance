@@ -2,6 +2,8 @@ suppressMessages(library(pbdMPI))
 
 ## get node name
 host = system("hostname", intern = TRUE)
+rank = comm.rank()
+size = comm.size()
 
 mc.function = function(x) {
     Sys.sleep(1) # replace with your function for mclapply cores here
@@ -33,15 +35,13 @@ l_time = system.time({
 ##            same cores: avoid or manage appropriately!!!
 
 ## Now report what happened and where
-msg = paste0("Hello World from rank ", comm.rank(), " on host ", host,
-             " with ", cores_per_R, " cores.",
-             "            (", ranks_on_my_node, " R sharing ",
-             cores_on_my_node, " cores).\n",
-             "      pid: ", my_mcpids, "\n")
+msg = paste0("Hello World from rank ", rank, " on host ", host, " with ",
+             cores_per_R, " cores.", "            (", ranks_on_my_node,
+             " R sharing ", cores_on_my_node, " cores).\n", "      pid: ",
+             my_mcpids, "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
-
-comm.cat("Total R sessions:", comm.size(), "Total cores:", cores_total, "\n",
+comm.cat("Total R sessions:", size, "Total cores:", cores_total, "\n",
          quiet = TRUE)
 comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
