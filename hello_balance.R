@@ -23,7 +23,7 @@ my_pids = do.call(paste, my_pids) # combines results from mclapply
 
 ## Run lapply this time with same function
 l_time = system.time({
-  my_pids = lapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
+  my_pids = lapply(1:cores_per_R, mc.function)
 })
 
 ##
