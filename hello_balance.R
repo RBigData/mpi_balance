@@ -18,8 +18,10 @@ cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
 
 ## Run mclapply on allocated cores to demonstrate fork pids
+barrier()
 mc_time = system.time({
 my_mcpids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
+barrier()
 })
 my_mcpids = do.call(paste, my_mcpids) # combines results from mclapply
 
@@ -36,9 +38,9 @@ l_time = system.time({
 
 ## Now report what happened and where
 msg = paste0("Hello World from rank ", rank, " on host ", host, " with ",
-             cores_per_R, " cores.", "            (", ranks_on_my_node,
-             " R sharing ", cores_on_my_node, " cores).\n", "      pid: ",
-             my_mcpids, "\n")
+             cores_per_R, " cores.", "(", ranks_on_my_node, 
+             " R sessions sharing ", cores_on_my_node, " cores).\n",
+             "      pid: ", my_mcpids, "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
 comm.cat("Total R sessions:", size, "Total cores:", cores_total, "\n",
@@ -47,13 +49,17 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
-comm.cat("\nRank     User      System    Elapsed   Child_User Child_System\n",
-         quiet = TRUE)
-comm.cat(rank, sprintf("%10.3f", mc_time), "\n", quiet = TRUE, all.rank = TRUE)
 
-comm.cat("\nRank     User      System    Elapsed   Child_User Child_System\n",
+barrier()
+comm.cat("\nmclapply time on each of the", size, "ranks:\n")
+comm.cat("Rank     User      System    Elapsed   Child_User Child_System\n",
          quiet = TRUE)
-comm.cat(rank, sprintf("%10.3f", l_time), "\n", quiet = TRUE, all.rank = TRUE)
+comm.cat(rank, sprintf("%10.3f", mc_time), "\n", quiet = TRUE)
+
+comm.cat("\nlapply time on each of the", size, "ranks:\n")
+comm.cat("Rank     User      System    Elapsed   Child_User Child_System\n",
+         quiet = TRUE)
+comm.cat(rank, sprintf("%10.3f", l_time), "\n", quiet = TRUE)
 
 finalize()
 
