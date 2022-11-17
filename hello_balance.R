@@ -13,7 +13,7 @@ mc.function = function(x) {
 ## Compute how many cores per R session are on this node
 #local_ranks_query = "echo $OMPI_COMM_WORLD_LOCAL_SIZE"
 #ranks_on_my_node = as.numeric(system(local_ranks_query, intern = TRUE))
-ranks_on_my_node = Sys.getenv("OMPI_COMM_WORLD_LOCAL_SIZE")
+ranks_on_my_node = as.numeric(Sys.getenv("OMPI_COMM_WORLD_LOCAL_SIZE"))
 cores_on_my_node = parallel::detectCores()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
@@ -51,7 +51,7 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
 
-comm.cat("\nTime lapply should be about", cores_per_R, "x time mclapply:\n", 
+comm.cat("\nTime lapply should be about", cores_per_R, "x time mclapply\n", 
          quiet = TRUE)
 comm.cat("     mclapply time on each of the", size, "ranks:", mc_time[3], "\n", 
          quiet = TRUE)
