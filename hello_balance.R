@@ -11,8 +11,9 @@ mc.function = function(x) {
 }
 
 ## Compute how many cores per R session are on this node
-local_ranks_query = "echo $OMPI_COMM_WORLD_LOCAL_SIZE"
-ranks_on_my_node = as.numeric(system(local_ranks_query, intern = TRUE))
+#local_ranks_query = "echo $OMPI_COMM_WORLD_LOCAL_SIZE"
+#ranks_on_my_node = as.numeric(system(local_ranks_query, intern = TRUE))
+ranks_on_my_node = Sys.getenv("OMPI_COMM_WORLD_LOCAL_SIZE")
 cores_on_my_node = parallel::detectCores()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
@@ -43,14 +44,14 @@ msg = paste0("Hello from rank ", rank, " on node ", host, " claiming ",
              "      pid: ", my_mcpids, "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
-comm.cat("Total R sessions:", size, "Total cores:", cores_total, "\n",
-         quiet = TRUE)
+comm.cat("Total R sessions:", size, "\n", quiet = TRUE)
+comm.cat("Total cores:", cores_total, "\n", quiet = TRUE)
 comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
 
-comm.cat("\nFor correct scaling, time lapply ~", cores_per_R, "* mclapply\n", 
+comm.cat("\nTime lapply should be about", cores_per_R, "x time mclapply:\n", 
          quiet = TRUE)
 comm.cat("     mclapply time on each of the", size, "ranks:", mc_time[3], "\n", 
          quiet = TRUE)
