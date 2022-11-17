@@ -17,9 +17,9 @@ cores_total = allreduce(cores_per_R)  # adds up over ranks
 
 ## Run mclapply on allocated cores to demonstrate fork pids
 mc_time = system.time({
-my_pids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
+my_mcpids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 })
-my_pids = do.call(paste, my_pids) # combines results from mclapply
+my_mcpids = do.call(paste, my_mcpids) # combines results from mclapply
 
 ## Run lapply this time with same function
 l_time = system.time({
@@ -34,10 +34,10 @@ l_time = system.time({
 
 ## Now report what happened and where
 msg = paste0("Hello World from rank ", comm.rank(), " on host ", host,
-             " with ", cores_per_R, " cores allocated\n",
-             "            (", ranks_on_my_node, " R sessions sharing ",
-             cores_on_my_node, " cores on this host node).\n",
-             "      pid: ", my_pids, "\n")
+             " with ", cores_per_R, " cores.",
+             "            (", ranks_on_my_node, " R sharing ",
+             cores_on_my_node, " cores).\n",
+             "      pid: ", my_mcpids, "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
 
@@ -47,11 +47,13 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
-comm.cat("\n User      System    Elapsed   Child_User Child_System\n")
-comm.cat(sprintf("%10.3f", mc_time), "\n")
+comm.cat("\nRank     User      System    Elapsed   Child_User Child_System\n",
+         quiet = TRUE)
+comm.cat(rank, sprintf("%10.3f", mc_time), "\n", quiet = TRUE, all.rank = TRUE)
 
-comm.cat("\n User      System    Elapsed   Child_User Child_System\n")
-comm.cat(sprintf("%10.3f", l_time), "\n")
+comm.cat("\nRank     User      System    Elapsed   Child_User Child_System\n",
+         quiet = TRUE)
+comm.cat(rank, sprintf("%10.3f", l_time), "\n", quiet = TRUE, all.rank = TRUE)
 
 finalize()
 
