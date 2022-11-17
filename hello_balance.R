@@ -1,7 +1,7 @@
 suppressMessages(library(pbdMPI))
 
 ## get node name
-host = system("hostname", intern = TRUE)
+host = unlist(strsplit(system("hostname", intern = TRUE), split = "[.]"))[1]
 rank = comm.rank()
 size = comm.size()
 
@@ -37,9 +37,9 @@ l_time = system.time({
 ##            same cores: avoid or manage appropriately!!!
 
 ## Now report what happened and where
-msg = paste0("Hello from rank ", rank, " on host ", host, " with ",
+msg = paste0("Hello from rank ", rank, " on node ", host, " claiming ",
              cores_per_R, " cores.", "(", ranks_on_my_node, 
-             " R sessions sharing ", cores_on_my_node, " cores).\n",
+             " Rs on ", cores_on_my_node, " cores).\n",
              "      pid: ", my_mcpids, "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
