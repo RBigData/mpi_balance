@@ -20,6 +20,12 @@ mc_time = system.time({
 my_pids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 })
 my_pids = do.call(paste, my_pids) # combines results from mclapply
+
+## Run lapply this time with same function
+l_time = system.time({
+  my_pids = lapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
+})
+
 ##
 ## Same cores are shared with OpenBLAS (see flexiblas package)
 ##            or for other OpenMP enabled codes outside mclapply.
@@ -41,8 +47,11 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
-comm.cat("\n User  System  Elapsed  Child_User  Child_System\n")
-comm.cat(mc_time, "\n")
+comm.cat("\n User      System    Elapsed   Child_User Child_System\n")
+comm.cat(sprintf("%10.3f", mc_time), "\n")
+
+comm.cat("\n User      System    Elapsed   Child_User Child_System\n")
+comm.cat(sprintf("%10.3f", l_time), "\n")
 
 finalize()
 
