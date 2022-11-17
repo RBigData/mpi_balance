@@ -37,7 +37,7 @@ l_time = system.time({
 ##            same cores: avoid or manage appropriately!!!
 
 ## Now report what happened and where
-msg = paste0("Hello World from rank ", rank, " on host ", host, " with ",
+msg = paste0("Hello from rank ", rank, " on host ", host, " with ",
              cores_per_R, " cores.", "(", ranks_on_my_node, 
              " R sessions sharing ", cores_on_my_node, " cores).\n",
              "      pid: ", my_mcpids, "\n")
@@ -50,9 +50,12 @@ comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
 
-comm.cat("For correct scaling, time lapply ~", cores_per_R, "* mclapply\n")
-comm.cat("mclapply time on each of the", size, "ranks:", mc_time[3], "\n")
-comm.cat("lapply time on each of the", size, "ranks:", l_time[3], "\n")
+comm.cat("\nFor correct scaling, time lapply ~", cores_per_R, "* mclapply\n", 
+         quiet = TRUE)
+comm.cat("     mclapply time on each of the", size, "ranks:", mc_time[3], "\n", 
+         quiet = TRUE)
+comm.cat("     lapply time on each of the", size, "ranks:", l_time[3], "\n\n", 
+         quiet = TRUE)
 
 finalize()
 
