@@ -12,21 +12,21 @@ understanding these concepts can lead to more efficient use of
 parallel resources.
 
 You may need to modify the SLURM or PBS parameter values and possibly
-the `module`s that are loaded in the `hello_balance.pbs` and
-`hello_balance.slurm` scripts to match your local requirements. We
-would love to hear from you if you get this example to run with a
-different job scheduler.
+the `module`s that are loaded in the `hello_<machine>_slurm.sh` and
+`hello_<machine>_pbs.sh` scripts
+to match your local requirements. We
+would love to hear from you about your submission scripts on other clusters.
 
 The script expects both files to be in a directory named
 `~/mpi_balance`. Typically, this is submitted at the shell prompt on a
-cluster login node using slurm by
+cluster login node using slurm (example from ORNL's CADES cluster) by
 
 ```{sh}
-$ sbatch hello_balance.slurm
+$ sbatch hello_cades_slurm.sh
 ```
-or on one using PBS by
+or on one using PBS (example from IT4I's Karolina cluster) by
 ```{sh}
-$ qsub hello_balance.pbs 
+$ qsub hello_karolina_pbs.sh 
 ```
 
 A correct execution produces two output files `balance.e` and
