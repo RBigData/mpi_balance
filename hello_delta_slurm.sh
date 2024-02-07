@@ -3,7 +3,6 @@
 #SBATCH --account=bckj-delta-cpu
 #SBATCH --partition=cpu
 #SBATCH --nodes=2
-#SBATCH --ntasks-per-node=4
 #SBATCH --mem=0
 #SBATCH --exclusive
 #SBATCH --time 00:00:10
@@ -31,4 +30,4 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # NOTE: center policies may require dfferent parameters
 #
 # nodes and mapping coordinated with slurm by openmpi
-srun Rscript hello_balance.R
+mpirun --map-by ppr:4:node Rscript hello_balance.R
