@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name bal
-#SBATCH --account=MTH230032
-#SBATCH --partition=bckj-delta-cpu
+#SBATCH --account=bckj-delta-cpu
+#SBATCH --partition=cpu
 #SBATCH --nodes=2
 #SBATCH --mem=0
 #SBATCH --exclusive
