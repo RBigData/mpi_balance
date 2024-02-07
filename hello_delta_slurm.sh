@@ -8,8 +8,7 @@
 #SBATCH --time 00:00:10
 #SBATCH -e ./bal.e
 #SBATCH -o ./bal.o
-#SBATCH --mail-user=ost@ornl.gov
-#SBATCH --mail-type=FAIL
+#SBATCH --report-bindings
 
 cd ~/git/mpi_balance
 pwd

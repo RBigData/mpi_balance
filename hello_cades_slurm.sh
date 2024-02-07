@@ -1,15 +1,13 @@
 #!/bin/bash
-#SBATCH -J hello_balance
+#SBATCH -J bal
 #SBATCH -A ccsd
 #SBATCH -p batch
 #SBATCH -N 4
 #SBATCH --ntasks-per-node 4
 #SBATCH --mem=2G
 #SBATCH -t 00:00:10
-#SBATCH -e ./balance.e
-#SBATCH -o ./balance.o
-#SBATCH --mail-user=ost@ornl.gov
-#SBATCH --mail-type=FAIL
+#SBATCH -e ./bal.e
+#SBATCH -o ./bal.o
 
 cd ~/mpi_balance
 pwd
