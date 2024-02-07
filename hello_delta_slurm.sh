@@ -11,7 +11,7 @@
 #SBATCH --mail-user=ost@ornl.gov
 #SBATCH --mail-type=FAIL
 
-cd ~/mpi_balance
+cd ~/git/mpi_balance
 pwd
 
 ## module names can vary on different platforms
