@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name bal
-#SBATCH --account=<your-account>
+#SBATCH --account=MTH230032
 #SBATCH --partition=cpu
 #SBATCH --nodes=2
 #SBATCH --mem=0
