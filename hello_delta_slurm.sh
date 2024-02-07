@@ -8,7 +8,6 @@
 #SBATCH --time 00:00:10
 #SBATCH -e ./bal.e
 #SBATCH -o ./bal.o
-#SBATCH --report-bindings
 
 cd ~/git/mpi_balance
 pwd
@@ -31,4 +30,4 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # NOTE: center policies may require dfferent parameters
 #
 # nodes and mapping coordinated with slurm by openmpi
-mpirun --map-by ppr:4:node Rscript hello_balance.R
+mpirun --map-by ppr:4:node --report-bindings Rscript hello_balance.R
