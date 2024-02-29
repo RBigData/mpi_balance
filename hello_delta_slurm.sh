@@ -15,7 +15,9 @@ cd ~/mpi_balance
 pwd
 
 ## module names can vary on different platforms
-module load anaconda3_Rcpu/22.9.0 
+module load openblas
+module load flexiblas
+module load r
 echo "loaded R"
 module list
 
