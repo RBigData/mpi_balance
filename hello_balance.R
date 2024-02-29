@@ -6,7 +6,7 @@ rank = comm.rank()
 size = comm.size()
 
 mc.function = function(x) {
-    Sys.sleep(1) # replace with your function for mclapply cores here
+    Sys.sleep(0.1) # replace with your function for mclapply cores here
     Sys.getpid() # returns process id
 }
 
