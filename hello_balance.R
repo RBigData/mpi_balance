@@ -14,6 +14,8 @@ mc.function = function(x) {
 #local_ranks_query = "echo $OMPI_COMM_WORLD_LOCAL_SIZE"
 #ranks_on_my_node = as.numeric(system(local_ranks_query, intern = TRUE))
 ranks_on_my_node = as.numeric(Sys.getenv("OMPI_COMM_WORLD_LOCAL_SIZE"))
+ranks_on_my_node_slurm = as.numeric(Sys.getenv("SLURM_NTASKS_PER_NODE"))
+if(is.na(ranks_on_my_node)) ranks_on_my_node = ranks_on_my_node_slurm
 cores_on_my_node = parallel::detectCores()
 
 if(comm.rank() == 0) system("export")
