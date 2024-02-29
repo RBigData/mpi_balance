@@ -18,8 +18,6 @@ ranks_on_my_node_slurm = as.numeric(Sys.getenv("SLURM_NTASKS_PER_NODE"))
 if(is.na(ranks_on_my_node)) ranks_on_my_node = ranks_on_my_node_slurm
 cores_on_my_node = parallel::detectCores()
 
-if(comm.rank() == 0) system("export")
-barrier()
 comm.cat(rank, ":", size, "r-node", ranks_on_my_node, "c-node", cores_on_my_node, "\n", all.rank = TRUE)
 barrier()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
