@@ -11,7 +11,6 @@
 
 cd ~/git/mpi_balance
 pwd
-export
 
 ## module names can vary on different platforms
 module load openblas
