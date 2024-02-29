@@ -32,4 +32,5 @@ export OMPI_MCA_mpi_warn_on_fork=0
 # NOTE: center policies may require dfferent parameters
 #
 # nodes and mapping coordinated with slurm by openmpi
-mpirun -np 16 Rscript hello_balance.R
+mpirun -np 8 Rscript hello_balance.R
+#time mpirun --map-by ppr:4:node Rscript hello_balance.R
