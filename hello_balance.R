@@ -15,6 +15,9 @@ mc.function = function(x) {
 #ranks_on_my_node = as.numeric(system(local_ranks_query, intern = TRUE))
 ranks_on_my_node = as.numeric(Sys.getenv("OMPI_COMM_WORLD_LOCAL_SIZE"))
 cores_on_my_node = parallel::detectCores()
+
+comm.cat(rank, ":", size, "r-node", ranks_on_my_node, "c-node", cores_on_my_node, "\n", all.rank = TRUE)
+barrier()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
 
