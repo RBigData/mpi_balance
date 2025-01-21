@@ -1,7 +1,8 @@
 suppressMessages(library(pbdMPI))
 
-## list R session info
-sessionInfo()
+## list R session info from rank 0 while others wait
+if(comm.rank() == 0) sessionInfo()
+barrier()
 
 ## get node name
 host = unlist(strsplit(system("hostname", intern = TRUE), split = "[.]"))[1]
