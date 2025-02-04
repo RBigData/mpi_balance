@@ -47,7 +47,7 @@ barrier()
 mc_time = system.time({
 my_mcpids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 })
-mc_times = gather(mc_time[3]) # gather each rank's time to rank 0
+mc_times = gather(as.numeric(mc_time[3])) # gather each rank's time to rank 0
 
 ## Run lapply this time with same function
 l_time = system.time({
