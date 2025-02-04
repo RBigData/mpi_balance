@@ -5,7 +5,7 @@
 #SBATCH --nodes=2
 #SBATCH --tasks=8
 #SBATCH --tasks-per-node=4
-#SBATCH --time 00:00:10
+#SBATCH --time 00:00:30
 #SBATCH -e ./bal.e
 #SBATCH -o ./bal.o
 
