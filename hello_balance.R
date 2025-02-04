@@ -8,11 +8,15 @@ format_pids = function(x) {
     u = unique(x %/% 10^i)
     if(length(u) == 1) break
   }
-  paste(paste0(u, ":"), paste(x - u*10^i, collapse = " "))
+  formatC(x, width = 8, format = "d", flag = "0")
+  paste(paste0(u, ":"), paste(formatC(x - u*10^i, width = i, format = "d", flag = "0"), collapse = " "))
 }
 
 ## list R session info from rank 0 while others wait
-if(comm.rank() == 0) sessionInfo()
+if(comm.rank() == 0) {
+  sessionInfo()
+  print() # add newline
+}
 barrier()
 
 ## get node name
@@ -55,7 +59,7 @@ l_time = system.time({
 msg = paste0("Hello from rank ", rank, " on node ", host, " claiming ",
              cores_per_R, " cores.", "(", ranks_on_my_node, 
              " Rs on ", cores_on_my_node, " cores).\n",
-             "      pid: ", format_pids(my_mcpids), "\n")
+             "      pid: ", format_pids(my_mcpids), do.call(paste, my_mcpids), "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
 comm.cat("Total R sessions:", size, "\n", quiet = TRUE)
