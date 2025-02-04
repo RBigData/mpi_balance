@@ -67,7 +67,7 @@ comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 Sys.sleep(sleep_print) ## grace for all Hellos to propagate from nodes
 barrier() ## wait to finish all Hellos, then start writing summary by rank 0
 comm.cat("\nTotal R sessions:", size, "   Total cores:", cores_total, "\n", quiet = TRUE)
-comm.cat(cores_total*numinal_work_time, "seconds of nominal work done in", time1 - time0, "seconds\n", quiet = TRUE)
+comm.cat(cores_total*nominal_work_time, "seconds of nominal work done in", time1 - time0, "seconds\n", quiet = TRUE)
 comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
          "       pid to core map changes frequently during mclapply\n",
