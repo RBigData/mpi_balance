@@ -15,7 +15,7 @@ format_pids = function(x) {
 ## list R session info from rank 0 while others wait
 if(comm.rank() == 0) {
   sessionInfo()
-  print() # add newline
+  cat("\n") # add newline
 }
 barrier()
 
