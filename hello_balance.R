@@ -63,6 +63,7 @@ msg = paste0("Hello from rank ", rank, " on node ", host, " claiming ",
              "      pid: ", format_pids(my_mcpids), "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
+barrier() ## wait for all ranks to finish Hellos, then start writing summary by rank 0
 comm.cat("Total R sessions:", size, "\n", quiet = TRUE)
 comm.cat("Total cores:", cores_total, "\n", quiet = TRUE)
 comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
