@@ -15,7 +15,7 @@ format_pids = function(x) {
 
 ## Small fraction sleep for print synchronization. When zero, some printing may be 
 ## out of order due to different paths from different nodes.
-sleep = 0.1
+sleep = 1
 
 ## list R session info from rank 0 while others wait
 if(comm.rank() == 0) {
