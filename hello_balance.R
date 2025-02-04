@@ -64,7 +64,7 @@ msg = paste0("Hello from rank ", rank, " on node ", host, " claiming ",
              "      pid: ", format_pids(my_mcpids), "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
-Sys.sleep(sleep) ## grace for all Hellos to propagate from nodes
+Sys.sleep(sleep_print) ## grace for all Hellos to propagate from nodes
 barrier() ## wait to finish all Hellos, then start writing summary by rank 0
 comm.cat("\nTotal R sessions:", size, "   Total cores:", cores_total, "\n", quiet = TRUE)
 comm.cat(cores_total*numinal_work_time, "seconds of nominal work done in", time1 - time0, "seconds\n", quiet = TRUE)
