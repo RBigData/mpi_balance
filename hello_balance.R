@@ -1,5 +1,16 @@
 suppressMessages(library(pbdMPI))
 
+format_pids = function(x) {
+  ## splits the digits in integer vector x into a same and diff components, returning a two-component list
+  ## with common part and different parts
+  x = unlist(x)
+  for(i in 1:5) {
+    u = unique(x %/% 10^i)
+    if(length(u) == 1) break
+  }
+  paste(paste0(u, ":"), paste(x - u*10^i, collapse = " "))
+}
+
 ## list R session info from rank 0 while others wait
 if(comm.rank() == 0) sessionInfo()
 barrier()
@@ -28,7 +39,6 @@ mc_time = system.time({
 my_mcpids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
 barrier()
 })
-my_mcpids = do.call(paste, my_mcpids) # combines results from mclapply
 
 ## Run lapply this time with same function
 l_time = system.time({
@@ -45,7 +55,7 @@ l_time = system.time({
 msg = paste0("Hello from rank ", rank, " on node ", host, " claiming ",
              cores_per_R, " cores.", "(", ranks_on_my_node, 
              " Rs on ", cores_on_my_node, " cores).\n",
-             "      pid: ", my_mcpids, "\n")
+             "      pid: ", format_pids(my_mcpids), "\n")
 comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 
 comm.cat("Total R sessions:", size, "\n", quiet = TRUE)
