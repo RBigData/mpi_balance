@@ -15,7 +15,8 @@ format_pids = function(x) {
 
 ## Small fraction sleep for print synchronization. When zero, some printing may be 
 ## out of order due to different paths from different nodes.
-sleep = 1
+nominal_work_time = 1
+sleep_print = 0.01
 
 ## list R session info from rank 0 while others wait
 if(comm.rank() == 0) {
@@ -30,8 +31,8 @@ rank = comm.rank()
 size = comm.size()
 
 mc.function = function(x) {
-    Sys.sleep(sleep) # replace with your function for mclapply cores here
-    Sys.getpid() # returns process id
+    Sys.sleep(nominal_work_time) # replace with your function for mclapply cores here
+    Sys.getpid() # returns process id (optional)
 }
 
 ## Compute how many cores per R session are on this node
@@ -42,17 +43,13 @@ cores_on_my_node = parallel::detectCores()
 cores_per_R = floor(cores_on_my_node/ranks_on_my_node)
 cores_total = allreduce(cores_per_R)  # adds up over ranks
 
-## Run mclapply on allocated cores to demonstrate fork pids
+## Run and time mclapply on allocated cores to demonstrate fork pids
 barrier()
-mc_time = system.time({
+time0 = Sys.time()
 my_mcpids = parallel::mclapply(1:cores_per_R, mc.function, mc.cores = cores_per_R)
-})
-mc_times = gather(as.numeric(mc_time[3])) # gather each rank's time to rank 0
-
-## Run lapply this time with same function
-l_time = system.time({
-  my_pids = lapply(1:cores_per_R, mc.function)
-})
+time1 = Sys.time()
+time0 = reduce(as.numeric(time0), op = "min") # gather each rank's time to rank 0
+time1 = reduce(as.numeric(time1), op = "max") # gather each rank's time to rank 0
 
 ##
 ## Same cores are shared with OpenBLAS (see flexiblas package)
@@ -70,14 +67,11 @@ comm.cat(msg, quiet = TRUE, all.rank = TRUE)
 Sys.sleep(sleep) ## grace for all Hellos to propagate from nodes
 barrier() ## wait to finish all Hellos, then start writing summary by rank 0
 comm.cat("\nTotal R sessions:", size, "   Total cores:", cores_total, "\n", quiet = TRUE)
+comm.cat(cores_total*numinal_work_time, "seconds of nominal work done in", time1 - time0, "seconds\n", quiet = TRUE)
 comm.cat("\nNotes: cores on node obtained by: detectCores {parallel}\n",
          "       ranks (R sessions) per node: OMPI_COMM_WORLD_LOCAL_SIZE\n",
          "       pid to core map changes frequently during mclapply\n",
          quiet = TRUE)
-
-comm.cat("\nTime lapply should be about", cores_per_R, "x time mclapply\n", quiet = TRUE)
-comm.cat("     mclapply time on each of the", size, "ranks:", paste(mc_times, collapse = " "), "\n", quiet = TRUE)
-comm.cat("     lapply time on each of the", size, "ranks:", l_time[3], "\n\n", quiet = TRUE)
 
 finalize()
 
